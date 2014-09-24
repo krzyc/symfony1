@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: PartialHelper.php 33122 2011-10-07 12:42:49Z fabien $
+ * @version    SVN: $Id: PartialHelper.php 27755 2010-02-08 20:51:02Z Kris.Wallsmith $
  */
 
 /**
@@ -138,7 +138,13 @@ function get_component($moduleName, $componentName, $vars = array())
 
   require($context->getConfigCache()->checkConfig('modules/'.$moduleName.'/config/module.yml'));
 
-  $class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+  // fix - symfony didnt use my partial class (KP)
+  //$class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+  if (sfConfig::has('mod_'.strtolower($moduleName).'_partial_view_class'))
+    $class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+  else
+    $class = sfConfig::get('mod_'.$context->getActionStack()->getLastEntry()->getModuleName().'_partial_view_class', 'sf').'PartialView';
+  
   $view = new $class($context, $moduleName, $actionName, '');
   $view->setPartialVars(true === sfConfig::get('sf_escaping_strategy') ? sfOutputEscaper::unescape($vars) : $vars);
 
@@ -213,7 +219,13 @@ function get_partial($templateName, $vars = array())
   }
   $actionName = '_'.$templateName;
 
-  $class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+  // fix - symfony didnt use my partial class (KP)
+  //$class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+  if (sfConfig::has('mod_'.strtolower($moduleName).'_partial_view_class'))
+    $class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+  else
+    $class = sfConfig::get('mod_'.$context->getActionStack()->getLastEntry()->getModuleName().'_partial_view_class', 'sf').'PartialView';
+  
   $view = new $class($context, $moduleName, $actionName, '');
   $view->setPartialVars(true === sfConfig::get('sf_escaping_strategy') ? sfOutputEscaper::unescape($vars) : $vars);
 

@@ -165,7 +165,10 @@ class Doctrine_Validator extends Doctrine_Locator_Injectable
              case 'float':
              case 'double':
              case 'decimal':
-                 return (string) $var == strval(floatval($var));
+		 return true;
+                 //return (string) $var == strval(floatval($var));
+                 //$larr = localeconv();
+                 //return str_replace($larr['decimal_point'], '.', (string)$var) == strval(sprintf('%F', $var));
              case 'integer':
                  return (string) $var == strval(round(floatval($var)));
              case 'string':
