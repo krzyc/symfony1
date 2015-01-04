@@ -263,6 +263,6 @@ abstract class sfFormFilterPropel extends sfFormFilter
 
   protected function camelize($text)
   {
-    return sfToolkit::camelize($text);
+    return strtr(ucwords(strtr($text, array('/' => ':: ', '_' => ' ', '-' => ' '))), array(' ' => ''));
   }
 }

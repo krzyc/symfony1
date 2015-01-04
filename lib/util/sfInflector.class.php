@@ -27,8 +27,7 @@ class sfInflector
    */
   public static function camelize($lower_case_and_underscored_word)
   {
-    $tmp = $lower_case_and_underscored_word;
-    return sfToolkit::camelize($tmp);
+    return strtr(ucwords(strtr($lower_case_and_underscored_word, array('/' => ':: ', '_' => ' ', '-' => ' '))), array(' ' => ''));
   }
 
   /**
