@@ -609,7 +609,6 @@ class sfToolkit
     return set_include_path(join(PATH_SEPARATOR, $paths));
   }
   
-  // deprecation fix:
   public static function camelize($text)
   {
     if (preg_match('#/(.?)#', $text, $matches)) {
